@@ -73,8 +73,102 @@ goodBadUgly = ["'The Good, the Bad and the Ugly'", "Sergio Leone", "1966", "8.8"
 joseyWales = ["'The Outlaw Josey Wales'", "Clint Eastwood", "1976", "7.8"]
 unforgiven = ["'Unforgiven'", "Clint Eastwood", "1992", "8.2"]
 django = ["'Django Unchained'", "Quentin Tarantino", "2012", "8.4"]
+westernMovies = [highNoon, goodBadUgly, joseyWales, unforgiven, django]
+
+# Hashmap used to store data and draw values from.
+# each genre key (string) points to a list of movies value (two-dimensional array).
+movies = { "action" : actionMovies, "comedy" : comedyMovies, "drama" : dramaMovies, 
+"fantasy" : fantasyMovies, "horror" : horrorMovies, "mystery" : mysteryMovies, 
+"romance" : romanceMovies, "thriller" : thrillerMovies, "western" : westernMovies }
 
 # ------------- LIST OF MOVIES END -------------
+
+# Opening greeting/introduction
+def greet():
+    print("* * * * * * * * * * * * * * * * * * * * * * *")
+    print("* * WELCOME TO THE MARVELOUS MOVIE STORE! * *")
+    print("* * * * * * * * * * * * * * * * * * * * * * *")
+    print()
+    print("   This establishment features a variety of  ")
+    print("   critically-acclaimed films from nine of   ")
+    print("  the most popular genres ever. It also uses ")
+    print(" advanced autocomplete to predict the genre of")
+    print("    your choice with only a few characters.")
+    print()
+    print("- - - - - - - - - - - - - - - - - - - - - - - - ")
+
+# Search system. Accepts array of options, returns an array of options. 
+# For example, a search for "a" may return ["action", "fantasy", "drama", "romance"]
+# Followed by "ac" returns only ["action"], the desired genre
+def search(options, searchLength):
+    newOptions = [] # Where the next set of options will go
+
+    search = input("Please enter the first character of the genre of your choice: ")
+    while len(search) != searchLength:
+        print("Sorry, that is not specific enough!")
+        search = input("Please enter the first character of the genre of your choice: ")
+
+    if options == None:
+        options = movies.keys()
+
+    for genre in options:
+        if search in genre[0:searchLength]:
+            newOptions.append(genre)
+    
+    searchLength += 1
+    options = newOptions
+
+    if len(options) > 1: # Still not narrowed down
+        #print(type(options))
+        #print(type(searchLength))
+        print("With this input, the possible genres are: " + options)
+        return search(options, searchLength)
+    elif len(options) == 1: # Only one remaining; returns list of length 1 that has correct option
+        print("With this input, we believe your genre of choice is: " + "".join(options))
+        check = input("Is this correct? Enter y/n: ")
+        if check == 'y':
+            return options
+        elif check == 'n':
+            print("Sorry! Please try again...")
+            return search(None, 1)
+        else:
+            print("Sorry, we didn't understand that. Please search again.")
+            return search(None, 1)
+    else: # Did not work
+        print("Sorry, we could not find the genre of your choice.")
+        return search(None, 1)
+
+# Prints formatted output of movies based on genre
+def output(genre):
+    moviesInGenre = movies[genre] # 2d array
+
+    for movie in moviesInGenre: # each movie in the genre
+        print("---------------------------------------------------------")
+        print("Title: " + movie[0])
+        print("Director: " + movie[1])
+        print("Release Year: " + movie[2])
+        print("IMDb Rating: " + movie[3])
+    print("---------------------------------------------------------")
+
+    
+
+
+# Master function, contains running logic
+def run():
+    greet()
+    genre = "".join(search(None, 1)) # Selection as a string
+    output(genre)
+    repeat = input("Would you like to look for more movies? Enter y/n: ")
+    while (repeat == 'y'):
+        genre = "".join(search(None, 1))
+        output(genre)
+        repeat = input("Would you like to look for more movies? Enter y/n: ")
+        while (repeat != 'y' or repeat != 'n'):
+            repeat = input("Would you like to look for more movies? Enter y/n: ")
+
+    print("Thank you for coming!")
+
+run()
 
 
 
