@@ -52,7 +52,7 @@ whenHarryMetSally = ["'When Harry Met Sally...'", "Rob Reiner", "1989", "7.7"]
 titanic = ["'Titanic'", "James Cameron", "1997", "7.9"]
 eternalSunshine = ["'Eternal Sunshine of the Spotless Mind'", "Michel Gondry", "2004", "8.3"]
 slumdogMillionaire = ["'Slumdog Millionaire'", "Danny Boyle", "2008", "8.0"]
-romanceMovies = [soundOfMusic, whenHarryMetSally, eternalSunshine, slumdogMillionaire]
+romanceMovies = [soundOfMusic, whenHarryMetSally, titanic, eternalSunshine, slumdogMillionaire]
 
 # Thriller Movies:
 nightOfTheHunter = ["'The Night of the Hunter'", "Charles Laughton", "1955", "8.0"]
@@ -69,3 +69,21 @@ joseyWales = ["'The Outlaw Josey Wales'", "Clint Eastwood", "1976", "7.8"]
 unforgiven = ["'Unforgiven'", "Clint Eastwood", "1992", "8.2"]
 django = ["'Django Unchained'", "Quentin Tarantino", "2012", "8.4"]
 westernMovies = [highNoon, goodBadUgly, joseyWales, unforgiven, django]
+
+# Additional Genres (added after completion)
+
+# Animated Movies:
+nausicaa = ["'Nausicaa of the Valley of the Wind'", "Hayao Miyazaki", "1984", "8.0"]
+toyStory = ["'Toy Story'", "John Lasseter", "1995", "8.3"]
+spiritedAway = ["'Spirited Away'", "Hayao Miyazaki", "2001", "8.6"]
+wallE = ["'WALL-E'", "Andrew Stanton", "2008", "8.4"]
+spiderVerse = ["'Spider-Man: Into the Spider-Verse'", "Bob Persichetti, Peter Ramsey, Rodney Rothman", "2018", "8.4"]
+animatedMovies = [nausicaa, toyStory, spiritedAway, wallE, spiderVerse]
+
+# War Movies:
+pathsOfGlory = ["'Paths of Glory'", "Stanley Kubrick", "1957", "8.4"]
+apocalypseNow = ["'Apocalypse Now'", "Francis Ford Coppola", "1979", "8.5"]
+schindlersList = ["'Schindler's List'", "Steven Spielberg", "1993", "9.0"]
+thePianist = ["'The Pianist'", "Roman Polanski", "2002", "8.5"]
+ingloriousBasterds = ["'Inglorious Basterds'", "Quentin Tarantino", "2009", "8.3"]
+warMovies = [pathsOfGlory, apocalypseNow, schindlersList, thePianist, ingloriousBasterds]
