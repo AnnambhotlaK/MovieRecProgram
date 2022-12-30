@@ -15,8 +15,11 @@ movies.setVal("mystery", mysteryMovies)
 movies.setVal("romance", romanceMovies)
 movies.setVal("thriller", thrillerMovies)
 movies.setVal("western", westernMovies)
+movies.setVal("animated", animatedMovies)
+movies.setVal("war", warMovies)
 
-movieKeys = ["action", "comedy", "drama", "fantasy", "horror", "mystery", "romance", "thriller", "western"]
+movieKeys = ["action", "comedy", "drama", "fantasy", "horror",
+"mystery","romance", "thriller", "western", "animated", "war"]
 
 # Opening greeting/introduction
 def greet():
@@ -24,11 +27,11 @@ def greet():
     print("* * * * WELCOME TO THE MARVELOUS MOVIE STORE! * * * *")
     print("* * * * * * * * * * * * * * * * * * * * * * * * * * *")
     print()
-    print("   This establishment features a variety of  ")
-    print("   critically-acclaimed films from nine of   ")
-    print("  the most popular genres ever. It also uses ")
-    print(" advanced autocomplete to predict the genre of")
-    print("    your choice with only a few characters.")
+    print("     This establishment features a variety of  ")
+    print("     critically-acclaimed films from nine of   ")
+    print("    the most popular genres ever. It also uses ")
+    print("   advanced autocomplete to predict the genre of")
+    print("      your choice with only a few characters.")
     print()
     print("* * * * * * * * * * * * * * * * * * * * * * * * * * *")
 
@@ -42,8 +45,8 @@ def search(options, searchLength):
 
         search = input("Please search for the genre of your choice: ")
         # User did not enter a search of valid length
-        while (len(search) == 0 or len(search) > searchLength):
-            print("Sorry, we didn't understand that.")
+        while (len(search) == 0 or len(search) != searchLength):
+            print("Please extend or shorten your search in accordance with the allowed search length of " + str(searchLength))
             search = input("Please search for the genre of your choice: ")
         # Otherwise, the search was good, and we can begin narrowing down options:
 
@@ -55,6 +58,7 @@ def search(options, searchLength):
         searchLength += 1
         # And update options:
         options = newOptions
+        print(options) # Show user new options before asking again.
     
     # If we're out of the while loop, that means one of two things:
     # We have no options and must alert the user...
@@ -85,7 +89,6 @@ def output(genre):
         print("IMDb Rating: " + movie[3])
     print("---------------------------------------------------------")
 
-    
 
 
 # Master function, contains running logic
@@ -114,11 +117,3 @@ def run():
 
 # Run program!
 run()
-
-
-
-
-
-
-
-
