@@ -1,9 +1,8 @@
 # This program will suggest critically acclaimed movies of a specific genre to the user.
-# Data is stored in a HashTable.
 # It also features autocomplete for convenience.
 
-from HashTable.py import *
-from MovieData.py import *
+from HashTable import *
+from MovieData import *
 
 # Create the hashmap:
 movies = HashTable(9) # For nine genres
@@ -16,6 +15,8 @@ movies.setVal("mystery", mysteryMovies)
 movies.setVal("romance", romanceMovies)
 movies.setVal("thriller", thrillerMovies)
 movies.setVal("western", westernMovies)
+
+movieKeys = ["action", "comedy", "drama", "fantasy", "horror", "mystery", "romance", "thriller", "western"]
 
 # Opening greeting/introduction
 def greet():
@@ -32,49 +33,49 @@ def greet():
     print("* * * * * * * * * * * * * * * * * * * * * * * * * * *")
 
 # Search system. Accepts array of options, returns an array of options. 
-# For example, a search for "a" may return ["action", "fantasy", "drama", "romance"]
-# Followed by "ac" returns only ["action"], the desired genre
 def search(options, searchLength):
-    newOptions = [] # Where the next set of options will go
-
-    search = input("Please enter the first character of the genre of your choice: ")
-    while len(search) != searchLength:
-        print("Sorry, we don't understand the input.")
-        search = input("Please enter the first character of the genre of your choice: ")
-
-    #if options == None:
-        #options = movies.keys()
-
-    for genre in options:
-        if search in genre[0:searchLength]:
-            newOptions.append(genre)
     
-    searchLength += 1
-    options = newOptions
+    # There are options remaining
+    while (len(options) > 1):
 
-    if len(options) > 1: # Still not narrowed down
-        #print(type(options))
-        #print(type(searchLength))
-        print("With this input, the possible genres are: " + options)
-        return search(options, searchLength)
-    elif len(options) == 1: # Only one remaining; returns list of length 1 that has correct option
-        print("With this input, we believe your genre of choice is: " + "".join(options))
-        check = input("Is this correct? Enter y/n: ")
-        if check == 'y':
-            return options
-        elif check == 'n':
-            print("Sorry! Please try again...")
-            return search(movies.keys(), 1)
-        else:
-            print("Sorry, we didn't understand that. Please search again.")
-            return search(movies.keys(), 1)
-    else: # Did not work
-        print("Sorry, we could not find the genre of your choice.")
-        return search(movies.keys(), 1)
+        newOptions = []
+
+        search = input("Please search for the genre of your choice: ")
+        # User did not enter a search of valid length
+        while (len(search) == 0 or len(search) > searchLength):
+            print("Sorry, we didn't understand that.")
+            search = input("Please search for the genre of your choice: ")
+        # Otherwise, the search was good, and we can begin narrowing down options:
+
+        for genre in options:
+            if search in genre[0:searchLength]:
+                newOptions.append(genre)
+        # By end of for loop, we have all valid options remaining
+        # Increase valid search length:
+        searchLength += 1
+        # And update options:
+        options = newOptions
+    
+    # If we're out of the while loop, that means one of two things:
+    # We have no options and must alert the user...
+
+    if len(options) == 0:
+        print("Sorry, we do not have the genre of your choice.")
+        return None
+    
+    # Or we have one option (perfect!)
+    print("We have narrowed your search down to one genre: " + "".join(options))
+    check = input("Is this correct? Enter y/anything else: ")
+    if check == 'y':
+        print("Here's your albums!")
+        return "".join(options)
+    else:
+        print("Our apologies for failing to find your search. Please search again.")
+        return None
 
 # Prints formatted output of movies based on genre
 def output(genre):
-    moviesInGenre = movies[genre] # 2d array
+    moviesInGenre = movies.getVal(genre) # 2d array
 
     for movie in moviesInGenre: # each movie in the genre
         print("---------------------------------------------------------")
@@ -89,19 +90,35 @@ def output(genre):
 
 # Master function, contains running logic
 def run():
-    greet()
-    genre = "".join(search(movies.keys(), 1)) # Selection as a string
-    output(genre)
-    repeat = input("Would you like to look for more movies? Enter y/n: ")
-    while (repeat == 'y'):
-        genre = "".join(search(movies.keys(), 1))
-        output(genre)
-        repeat = input("Would you like to look for more movies? Enter y/n: ")
-        while (repeat != 'y' or repeat != 'n'):
-            repeat = input("Would you like to look for more movies? Enter y/n: ")
+    
+    # Allows for repetition
+    repeat = 'y'
+    greet() # Welcome message
 
+    while (repeat == 'y'):
+
+        genre = search(movieKeys, 1)
+
+        # User did not find genre of choice, have them retry
+        while genre == None:
+            genre = search(movieKeys, 1)
+
+        # Otherwise, we can output
+        output(genre)
+
+        # Ask user if they want to continue
+        repeat = input("Would you like to look for more movies? Enter 'y'/anything else: ")
+
+    # Prints when user said definitive "no"
     print("Thank you for coming!")
 
+# Run program!
 run()
+
+
+
+
+
+
 
 
